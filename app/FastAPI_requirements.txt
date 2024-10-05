@@ -27,7 +27,7 @@ SQLAlchemy==1.4.51            #updated with 2.0.35
 starlette==0.35.1
 slowapi== 0.1.9
 ujson==5.9.0
-urllib3==2.1.0
+urllib3==2.2.2
 uvicorn==0.26.0
 watchfiles==0.21.0
 websockets==12.0
