@@ -107,7 +107,7 @@ async def ttm_service(request: TTMrequest, user: User = Depends(get_current_acti
             if user.subscription_end_time and datetime.utcnow() <= user.subscription_end_time and role.ttm_enabled == 1:
                 print("Congratulations! You have access to Text-to-Music (TTM) service.")
 
-                request_data = request.dict()  # Convert Pydantic model to dictionary
+                request_data = await request.json()  # Convert Pydantic model to dictionary
                 print('_______________request_data_____________', request_data)
 
                 prompt = request_data.get("prompt")
