@@ -30,7 +30,7 @@ ttm_api = TTM_API()
 # Define a Pydantic model for the request body
 class TTMrequest(BaseModel):
     prompt: str # The prompt for the Text-to-Music service
-    duration: int # The duration of the audio in seconds
+#     duration: int # The duration of the audio in seconds
 
 @router.post("/change_password", response_model=dict)
 async def change_user_password(
@@ -107,7 +107,7 @@ async def ttm_service(request: TTMrequest, user: User = Depends(get_current_acti
             if user.subscription_end_time and datetime.utcnow() <= user.subscription_end_time and role.ttm_enabled == 1:
                 print("Congratulations! You have access to Text-to-Music (TTM) service.")
 
-                request_data = request.json()  # Convert Pydantic model to dictionary
+                request_data = request.dict()  # Convert Pydantic model to dictionary
                 print('_______________request_data_____________', request_data)
 
                 prompt = request_data.get("prompt")
@@ -159,8 +159,6 @@ async def ttm_service(request: TTMrequest, user: User = Depends(get_current_acti
         else:
             print(f"{user.username}! You do not have any roles assigned.")
             raise HTTPException(status_code=401, detail=f"{user.username}! Your does not have any roles assigned")
-    except:
-        raise HTTPException(status_code=404, detail="Audio not Generated")
 
     # except RateLimitExceeded as e:
     #     # Handle the RateLimitExceeded exception
@@ -168,3 +166,11 @@ async def ttm_service(request: TTMrequest, user: User = Depends(get_current_acti
     #     raise HTTPException(
     #         status_code=429,
     #         detail="Oops! You have exceeded the rate limit: 1 request / 5 minutes. Please try again later.")
+
+
+    except HTTPException as e:
+        # Handle the RateLimitExceeded exception
+        print(f"Audio not generated: {e}")
+        raise HTTPException(
+            status_code=404,
+            detail="Audio not generated")
