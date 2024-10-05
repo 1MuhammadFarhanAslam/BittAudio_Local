@@ -44,7 +44,7 @@ class MusicGenerationService(AIModelService):
 
     async def run_async(self):
         step = 0
-        while True:
+        while step == 0:
             try:
                 await self.main_loop_logic(step)
                 step += 1
