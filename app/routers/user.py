@@ -15,13 +15,13 @@ from fastapi.responses import FileResponse
 import os
 import random
 from sqlalchemy.orm import Session
-from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
-from slowapi import Limiter
+# from slowapi.util import get_remote_address
+# from slowapi.errors import RateLimitExceeded
+# from slowapi import Limiter
 
 
 # Create a Limiter instance
-limiter = Limiter(key_func=get_remote_address)
+# limiter = Limiter(key_func=get_remote_address)
 router = APIRouter()
 ttm_api = TTM_API()
 
