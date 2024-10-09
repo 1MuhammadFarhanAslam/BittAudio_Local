@@ -2,6 +2,6 @@
 default_args = {
     'subtensor_network': 'finney',
     'netuid': 50,
-    'wallet_name': 'default',
-    'wallet_hotkey': 'default'
+    'wallet_name': 'cold',
+    'wallet_hotkey': 'hot'
 }
