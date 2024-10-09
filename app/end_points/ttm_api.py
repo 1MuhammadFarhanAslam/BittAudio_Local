@@ -87,12 +87,11 @@ import lib
 class TTM_API(MusicGenerationService):
     def __init__(self):
         super().__init__()
-        self.target_uids = [1, 4, 10]  # Specify the UIDs to filter
         self.filtered_axons = self._generate_filtered_axons_list()  # Generate list based on target UIDs
         self.current_index = 0  # Initialize current_index to avoid AttributeError
 
     def _generate_filtered_axons_list(self):
-        """Generate the list of filtered axons for specific UIDs (1, 4, 10)."""
+        """Generate the list of filtered axons for UIDs 58 and 69 only."""
         try:
             # Convert the metagraph's UIDs to a list
             uids = self.metagraph.uids.tolist()
@@ -108,10 +107,10 @@ class TTM_API(MusicGenerationService):
             # Multiply the two PyTorch tensors
             queryable_axons_mask = total_stake_mask * axon_ips_tensor
 
-            # Filter UIDs for target UIDs (1, 4, 10)
+            # Filter UIDs
             filtered_uids = [
                 uid for uid, queryable in zip(uids, queryable_axons_mask)
-                if queryable.item() and uid in self.target_uids
+                if queryable.item()
             ]
 
             # Create a list of tuples (UID, Axon) for the filtered UIDs
@@ -136,5 +135,4 @@ class TTM_API(MusicGenerationService):
             return [item_to_return]
         else:
             return None  # Return None if there are no axons left
-
 
