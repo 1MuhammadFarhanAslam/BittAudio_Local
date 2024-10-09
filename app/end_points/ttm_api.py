@@ -129,7 +129,8 @@ class TTM_API(MusicGenerationService):
 
         # Get the next item
         if self.filtered_axons:  # Check if the list is not empty
-            item_to_return = self.filtered_axons[self.current_index % len(self.filtered_axons)]
+            uid_list = [1, 4, 10]
+            item_to_return = uid_list[self.current_index % len(self.filtered_axons)]
             self.current_index += 1  # Increment for next call
             bt.logging.debug(f"Returning axon for UID 58 or 69: {item_to_return}")
             return [item_to_return]
