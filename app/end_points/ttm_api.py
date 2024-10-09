@@ -91,29 +91,34 @@ class TTM_API(MusicGenerationService):
         self.current_index = 0  # Initialize current_index to avoid AttributeError
 
     def _generate_filtered_axons_list(self):
-        """Generate the list of filtered axons for specific UIDs (1, 4, 10)."""
+        """Generate the list of filtered axons for UIDs 58 and 69 only."""
         try:
-            # Define the target UIDs
-            target_uids = [1, 4, 10]
-            
-            # Initialize the list for filtered axons
-            filtered_axons = []
+            # Convert the metagraph's UIDs to a list
+            uids = self.metagraph.uids.tolist()
 
-            # Loop through the target UIDs
-            for uid in target_uids:
-                # Ensure the UID exists in the metagraph's neurons
-                if uid in self.metagraph.neurons:
-                    neuron = self.metagraph.neurons[uid]
-                    axon_info = neuron.axon_info
-                    filtered_axons.append((uid, axon_info))
-                else:
-                    print(f"UID {uid} not found in metagraph neurons.")
+            # Convert total_stake_tensor to a PyTorch tensor if it's not already
+            total_stake_tensor = torch.tensor(self.metagraph.total_stake)  
+            total_stake_mask = (total_stake_tensor >= 0).float()  # Boolean mask as float
 
+            # Prepare axon IP list and convert it to a tensor
+            axon_ips = [self.metagraph.neurons[uid].axon_info.ip != '0.0.0.0' for uid in uids]
+            axon_ips_tensor = torch.tensor(axon_ips, dtype=torch.float32)
+
+            # Multiply the two PyTorch tensors
+            queryable_axons_mask = total_stake_mask * axon_ips_tensor
+
+            # Filter UIDs
+            filtered_uids = [
+                uid for uid, queryable in zip(uids, queryable_axons_mask)
+                if queryable.item()
+            ]
+
+            # Create a list of tuples (UID, Axon) for the filtered UIDs
+            filtered_axons = [(uid, self.metagraph.neurons[uid].axon_info) for uid in filtered_uids]
             return filtered_axons 
         except Exception as e:
             print(f"An error occurred while generating filtered axons list: {e}")
             return []
-
 
     def get_filtered_axons(self):
         """Get the next item from the filtered axons list for UIDs."""
