@@ -316,7 +316,7 @@ tzlocal==5.2
 ujson==5.9.0
 umap-learn==0.5.1
 unidic-lite==1.0.8
-urllib3==2.2.0
+urllib3==2.2.2
 uvicorn==0.22.0
 vector_quantize_pytorch==1.12.17
 wandb==0.16.2
