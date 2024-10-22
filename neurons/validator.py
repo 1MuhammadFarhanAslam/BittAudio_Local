@@ -24,30 +24,6 @@ from ttm.aimodel import AIModelService
 if os.path.exists(os.path.join(project_root, 'app')):
     from app.fastapi_server import create_app
 
-
-import os
-import sys
-import asyncio
-import datetime as dt
-import wandb
-import bittensor as bt
-import uvicorn
-from pyngrok import ngrok  # Import ngrok from pyngrok
-
-# Set the project root path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-# Set the 'AudioSubnet' directory path
-audio_subnet_path = os.path.abspath(project_root)
-
-# Add the project root and 'AudioSubnet' directories to sys.path
-sys.path.insert(0, project_root)
-sys.path.insert(0, audio_subnet_path)
-
-# Check if the 'app' folder exists
-if os.path.exists(os.path.join(project_root, 'app')):
-    from app.fastapi_server import create_app
-
-
 class AIModelController():
     def __init__(self):
         self.aimodel = AIModelService()
