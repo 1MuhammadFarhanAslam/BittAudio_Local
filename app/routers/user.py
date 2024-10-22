@@ -151,8 +151,11 @@ async def ttm_service(request: TTMrequest, user: User = Depends(get_current_acti
                 content_type = "audio/wav" if file_extension == '.wav' else "audio/mpeg"
 
                 # Return the audio file
-                return FileResponse(path=audio_data, media_type=content_type, filename=os.path.basename(audio_data), headers={"TTM-Axon-UID": str(uid)})
-
+                return FileResponse(path=audio_data, media_type=content_type, filename=os.path.basename(audio_data), headers={
+                        "TTM-Axon-UID": str(uid),
+                        "TTM-Prompt": prompt  # Include prompt in headers
+                    }
+                )
             else:
                 print(f"{user.username}! You do not have any access to Text-to-Music (TTM) service or subscription is expired.")
                 raise HTTPException(status_code=401, detail=f"{user.username}! Your subscription have been expired or you does not have any access to Text-to-Music (TTM) service")

@@ -24,7 +24,6 @@ git clone https://github.com/UncleTensor/BittAudio.git
 cd BittAudio
 pip install -e .
 pip install -r requirements.txt
-wandb login
 ```
 **Install pm2**
 ```bash
@@ -38,26 +37,7 @@ sudo npm install pm2 -g
 ### Running a Miner
  - To operate a miner, run the miner.py script with the necessary configuration.
 
-### Starting with Auto Update script
- - To start the miner with auto-update, run the start_miner.py script with the required command-line arguments.
- - The script will automatically update the miner with the latest version.
- - [Note: the miner will have to run this auto-update script in a screen session]
-
 ### Miner Commands
-**Start with Auto update**
- - **Note: the miner will have to run this auto-update script in a screen session**
-```bash
-python scripts/start_miner.py -- \
-    --pm2_name {name} \
-    --netuid 50 \
-    --wallet.name {wallet_name} \
-    --wallet.hotkey {hotkey_name} \
-    --logging.trace \
-    --music_model {ttm-model} \
-    --axon.port {machine_port}
-```
-
-**Start with Auto update OFF**
 ```bash
 pm2 start neurons/miner.py -- \
     --netuid 50 \
