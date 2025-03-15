@@ -280,7 +280,7 @@ speechbrain==0.5.16
 SQLAlchemy==1.4.51                    #updated with 2.0.35
 srsly==2.4.8
 stack-data==0.6.3
-starlette==0.27.0
+starlette==0.40.0
 submitit==1.5.1
 substrate-interface==1.5.2
 sympy==1.12
